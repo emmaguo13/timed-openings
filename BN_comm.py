@@ -68,7 +68,7 @@ def main():
     # todo: set R
     scheme = BonehNaorCommitmentScheme(23123, 40)
     scheme.commit()
-    # scheme.open()
+    scheme.open()
     scheme.forced_open()
 
 main()

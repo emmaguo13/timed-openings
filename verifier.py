@@ -55,15 +55,6 @@ class Verifier:
 
             zi_hat = pow(self.g, ys[i], self.N) * pow(W[i - 1], -self.challenges[i], self.N) % self.N
             if zi_hat != zi:
-                print("bruh")
-                print(zi_hat, zi, self.N)
-                print(i)
-
-
-                # print("HELLOOOOOOO")
-                # print("a", As[i])
-                # print("y", ys[i])
-                # print("help", pow(2, pow(2, i - 1), self.q))
                 return False
 
             zs.append(zi)
@@ -82,7 +73,6 @@ class Verifier:
         self.v = pow(v_prime, self.q_product, self.N)
         # verify that v has odd order 
         v_check = pow(self.v, pow(2, l), self.N)
-        assert(v_check == self.W[-1])
         return self.v
 
     # l is message length

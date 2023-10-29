@@ -39,6 +39,7 @@ def committer_a_vals():
 @app_b.route('/get-commit', methods=['POST'])
 def committer_b_vals():
     h, g = committer_b.compute_g()
+    q = committer_a.q_array
     W = committer_b.compute_W()
     u = W[-1]
     assert(u == committer_b.compute_u())
@@ -48,7 +49,7 @@ def committer_b_vals():
     pairs = committer_b.compute_pairs()
     ys = committer_b.compute_ys(request.get_json()['challenges'])
 
-    values = {'l': committer_b.l, 'pairs': pairs, 'ys': ys, 'W': W, 'S': S, 'h': h, "g": g}
+    values = {'l': committer_b.l, 'pairs': pairs, 'ys': ys, 'W': W, 'S': S, 'h': h, "g": g, "q_array": q}
     return values
 
 

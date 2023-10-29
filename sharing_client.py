@@ -4,7 +4,7 @@ from verifier import Verifier
 
 
 def verify_and_open(verifier, challenges, url): 
-    r = requests.post(url + "get-commit", {"challenges": challenges})
+    r = requests.post(url + "get-commit", json={"challenges": challenges})
     res = r.json()
 
     verifier.verify_g(res['h'], res['g'], res['q_array'])
@@ -16,7 +16,7 @@ def verify_and_open(verifier, challenges, url):
 
     v = verifier.compute_v(res['l'], res2['v_prime'])
     m = verifier.open_message(res['l'], res['S'])
-    print(m)
+    return m
 
 
 def verify_and_force_open(verifier, challenges, url): 
@@ -32,9 +32,9 @@ def verify_and_force_open(verifier, challenges, url):
 
 
 def main():
-    res_a = requests.get("http://127.0.0.1:5000/get-a-N")
+    res_a = requests.get("http://127.0.0.1:5000/get-N")
     a_N = res_a.json()["N"]
-    res_b = requests.get("http://127.0.0.1:5001/get-b-N")
+    res_b = requests.get("http://127.0.0.1:5001/get-N")
     b_N = res_b.json()["N"]
 
     verifier_a = Verifier(40, a_N, 16)
@@ -46,5 +46,9 @@ def main():
     # to send to committer a
     challenges_b = verifier_b.gen_challenges(verifier_b.k)
 
-    verify_and_open(verifier_b, challenges_b, "http://127.0.0.1:5000/")
-    verify_and_open(verifier_a, challenges_a, "http://127.0.0.1:5001/")
+    opened_a_share = verify_and_open(verifier_b, challenges_b, "http://127.0.0.1:5000/")
+    opened_b_share = verify_and_open(verifier_a, challenges_a, "http://127.0.0.1:5001/")
+    
+    assert(int("".join(str(bit) for bit in opened_a_share), 2) + 23123 == int("".join(str(bit) for bit in opened_b_share), 2) + 23123)
+
+main()
