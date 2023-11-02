@@ -1,3 +1,4 @@
 pycryptodome
 sympy
-mod
+requests
+argparse
