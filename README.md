@@ -1,5 +1,7 @@
 # Boneh Naor Timed Commitments
 
+Python implementation of https://crypto.stanford.edu/~dabo/pubs/abstracts/timedcommit.html
+
 Run `python3 timed_opening.py` to run my implementation timed commitments!
 
 ### For two party MPC
